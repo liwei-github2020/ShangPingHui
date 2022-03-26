@@ -1,23 +1,66 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
+
+// 重写路由的push，解决多次点击跳转控制台报错问题
+let originPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function (location, resolve, reject) {
+  if (resolve && reject) {
+    originPush.call(this, location, resolve, reject);
+  } else {
+    originPush.call(this, location, () => { }, () => { });
+  }
+}
+
+// 重写replace
+let originReplace = VueRouter.prototype.replace;
+VueRouter.prototype.replace = function (location, resolve, reject) {
+  if (resolve && reject) {
+    originReplace.call(this, location, resolve, reject);
+  } else {
+    originReplace.call(this, location, () => { }, () => { });
+  }
+}
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    redirect: '/home',
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    name: 'home',
+    path: '/home',
+    component: () => import('@/views/Home'),
+    meta: {
+      isFooterShow: true
+    }
+  },
+  {
+    name: 'login',
+    path: '/login',
+    component: () => import('@/views/Login'),
+    meta: {
+      isFooterShow: false
+    }
+  },
+  {
+    name: 'search',
+    path: '/search/:s?',
+    component: () => import('@/views/Search'),
+    meta: {
+      isFooterShow: true
+    }
+  },
+  {
+    name: 'register',
+    path: '/register',
+    component: () => import('@/views/Register'),
+    meta: {
+      isFooterShow: false
+    }
+  },
+
 ]
 
 const router = new VueRouter({
