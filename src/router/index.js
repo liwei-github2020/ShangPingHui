@@ -46,7 +46,7 @@ const routes = [
   },
   {
     name: 'search',
-    path: '/search/:s?',
+    path: '/search/:keywords?',
     component: () => import('@/views/Search'),
     meta: {
       isFooterShow: true

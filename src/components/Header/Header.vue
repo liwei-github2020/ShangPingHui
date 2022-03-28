@@ -61,15 +61,16 @@ export default {
   },
   methods: {
     goSearch() {
-      this.$router.push({
+      let location = {
         name: "search",
-        // query: {
-        //   k: this.keywords,
-        // },
         params: {
-          s: this.keywords || undefined,
+          keywords: this.keywords || undefined,
         },
-      });
+      };
+      if (this.$route.query) {
+        location.query = this.$route.query;
+      }
+      this.$router.push(location);
     },
   },
 };
