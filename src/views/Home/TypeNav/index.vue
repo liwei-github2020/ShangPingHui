@@ -67,7 +67,6 @@
     </div>
   </div>
 </template>
-
 <script>
 // 引入节流函数
 import { throttle } from "@/utils/func";
@@ -83,7 +82,7 @@ export default {
     };
   },
   mounted() {
-    this.$store.dispatch("categoryList");
+    
     if (this.$route.path != "/home") {
       this.isShow = false;
     }
@@ -91,7 +90,7 @@ export default {
   methods: {
     mouseChange: throttle(function (index) {
       this.currentIndex = index;
-    }, 30),
+    }, 20),
 
     mouseenter() {
       if (this.$route.path != "/home") {

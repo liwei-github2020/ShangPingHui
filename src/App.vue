@@ -13,6 +13,9 @@ import Footer from "./components/Footer/Footer.vue";
 export default {
   name: "",
   components: { Header, Footer },
+  mounted() {
+    this.$store.dispatch("categoryList");
+  },
 };
 </script>
 
