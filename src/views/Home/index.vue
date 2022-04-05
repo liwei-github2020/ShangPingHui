@@ -32,7 +32,7 @@ export default {
     Floor,
     Brand,
   },
-  mounted() {
+  created() {
     this.$store.dispatch("getFloorList");
   },
   computed: {

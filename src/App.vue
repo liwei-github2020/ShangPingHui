@@ -13,11 +13,11 @@ import Footer from "./components/Footer/Footer.vue";
 export default {
   name: "",
   components: { Header, Footer },
-  mounted() {
+  created() {
     this.$store.dispatch("categoryList");
   },
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 </style>

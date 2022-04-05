@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+import { Pagination, Button } from 'element-ui';
+Vue.use(Pagination)
+
 Vue.config.productionTip = false
 
 // 注册全局组件
@@ -14,6 +17,9 @@ import '@/mock/mockServe'
 
 
 new Vue({
+  beforeCreate() {
+    Vue.prototype.$bus = this;
+  },
   router,
   store,
   render: h => h(App)

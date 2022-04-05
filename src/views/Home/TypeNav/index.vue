@@ -82,7 +82,6 @@ export default {
     };
   },
   mounted() {
-    
     if (this.$route.path != "/home") {
       this.isShow = false;
     }
@@ -99,8 +98,8 @@ export default {
     },
 
     mouseleave() {
-      this.currentIndex = -2;
-
+      this.currentIndex = -1;
+      //判断如果是Search路由组件的时候才会执行
       if (this.$route.path != "/home") {
         this.isShow = false;
       }
@@ -114,11 +113,11 @@ export default {
         let location = { name: "search" };
         let query = { categoryName: categoryname };
         if (cate1) {
-          query.categoryId = cate1;
+          query.category1Id = cate1;
         } else if (cate2) {
-          query.categoryId = cate2;
+          query.category2Id = cate2;
         } else {
-          query.categoryId = cate3;
+          query.category3Id = cate3;
         }
         location.query = query;
         this.$router.push(location);

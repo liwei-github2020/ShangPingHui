@@ -46,7 +46,7 @@ const routes = [
   },
   {
     name: 'search',
-    path: '/search/:keywords?',
+    path: '/search/:keyword?',
     component: () => import('@/views/Search'),
     meta: {
       isFooterShow: true
@@ -60,13 +60,23 @@ const routes = [
       isFooterShow: false
     }
   },
-
+  {
+    name: 'detail',
+    path: '/detail/:id?',
+    component: () => import('@/views/Detail'),
+    meta: {
+      isFooterShow: false
+    }
+  },
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
+  scrollBehavior(to, from, savePosition) {
+    return { y: 0 }
+  }
 })
 
 export default router

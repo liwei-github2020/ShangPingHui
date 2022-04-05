@@ -10,3 +10,9 @@ export const reqGetBannerList = () => mockRequest.get("/banner");
 
 // 请求floor数据
 export const reqGetFloorList = () => mockRequest.get("/floor")
+
+// search组件
+export const reqGetSearchInfo = (params) => request({ url: '/list', method: 'post', data: params })
+
+// 根据id获取商品信息
+export const reqGetGoodInfo = (id) => request({ url: `/item/${id}`, method: 'get' })

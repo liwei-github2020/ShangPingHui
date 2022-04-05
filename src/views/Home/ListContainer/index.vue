@@ -3,7 +3,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <Swiper :bannerList='bannerList'></Swiper>
+        <Swiper :bannerList="bannerList"></Swiper>
       </div>
       <div class="right">
         <div class="news">
@@ -90,12 +90,12 @@ export default {
   components: {
     Swiper,
   },
-  mounted() {
+  created() {
     this.$store.dispatch("getBannerList");
   },
   computed: {
     ...mapState({
-      bannerList: (state) => state.Home.bannerList,
+      bannerList: (state) => state.Home.bannerList || [],
     }),
   },
 };

@@ -33,7 +33,7 @@
       <div class="searchArea">
         <form action="###" class="searchForm">
           <input
-            v-model="keywords"
+            v-model="keyword"
             type="text"
             id="autocomplete"
             class="input-error input-xxlarge"
@@ -56,7 +56,7 @@ export default {
   name: "Header",
   data() {
     return {
-      keywords: "",
+      keyword: "",
     };
   },
   methods: {
@@ -64,7 +64,7 @@ export default {
       let location = {
         name: "search",
         params: {
-          keywords: this.keywords || undefined,
+          keyword: this.keyword || undefined,
         },
       };
       if (this.$route.query) {
@@ -72,6 +72,11 @@ export default {
       }
       this.$router.push(location);
     },
+  },
+  mounted() {
+    this.$bus.$on("clearKeyword", () => {
+      this.keyword = "";
+    });
   },
 };
 </script>
