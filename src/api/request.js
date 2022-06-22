@@ -4,6 +4,8 @@ import axios from 'axios';
 import nprogress from 'nprogress';
 import 'nprogress/nprogress.css';
 
+import store from '@/store';
+
 const request = axios.create({
   baseURL: '/api',
   timeout: 5000,
@@ -11,6 +13,12 @@ const request = axios.create({
 
 // 请求拦截器
 request.interceptors.request.use(config => {
+  if (store.state.ShopCart.uuid_token) {
+    config.headers.userTempId = store.state.ShopCart.uuid_token;
+  }
+  if (store.state.User.token) {
+    config.headers.token = store.state.User.token;
+  }
   nprogress.start()
   return config;
 })

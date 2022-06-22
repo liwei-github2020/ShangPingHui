@@ -126,7 +126,9 @@ export default {
   },
   computed: {
     ...mapState({
-      categoryList: (state) => state.Home.categoryList,
+      categoryList: (state) => {
+        return state.Home.categoryList;
+      },
     }),
   },
 };

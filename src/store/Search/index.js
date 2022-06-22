@@ -1,8 +1,8 @@
 import { reqGetSearchInfo } from '@/api'
 
 // Search模块
-const state = () => {
-  searchInfo: { }
+const state = {
+  searchInfo: {}
 }
 
 const mutations = {

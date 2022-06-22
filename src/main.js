@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import { Pagination, Button } from 'element-ui';
+import { Pagination } from 'element-ui';
 Vue.use(Pagination)
 
 Vue.config.productionTip = false
@@ -13,7 +13,7 @@ import TypeNav from '@/views/Home/TypeNav'
 Vue.component(TypeNav.name, TypeNav)
 
 // 引入mock
-import '@/mock/mockServe'
+import './mock/mockServe'
 
 
 new Vue({

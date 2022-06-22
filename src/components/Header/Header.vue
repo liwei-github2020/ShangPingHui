@@ -5,15 +5,19 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p>
+          <p v-if="!userName">
             <span>请</span>
             <router-link to="/login"> 登录</router-link>
             <router-link to="/register" class="register">免费注册</router-link>
           </p>
+          <p v-else>
+            <a>{{ userName }}</a>
+            <a class="register" @click="logout">退出登录</a>
+          </p>
         </div>
         <div class="typeList">
           <a href="###">我的订单</a>
-          <a href="###">我的购物车</a>
+          <router-link to="/shopcart">我的购物车</router-link>
           <a href="###">我的尚品汇</a>
           <a href="###">尚品汇会员</a>
           <a href="###">企业采购</a>
@@ -32,17 +36,8 @@
       </h1>
       <div class="searchArea">
         <form action="###" class="searchForm">
-          <input
-            v-model="keyword"
-            type="text"
-            id="autocomplete"
-            class="input-error input-xxlarge"
-          />
-          <button
-            class="sui-btn btn-xlarge btn-danger"
-            type="button"
-            @click="goSearch"
-          >
+          <input v-model="keyword" type="text" id="autocomplete" class="input-error input-xxlarge" />
+          <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">
             搜索
           </button>
         </form>
@@ -59,6 +54,11 @@ export default {
       keyword: "",
     };
   },
+  mounted() {
+    this.$bus.$on("clearKeyword", () => {
+      this.keyword = "";
+    });
+  },
   methods: {
     goSearch() {
       let location = {
@@ -72,18 +72,26 @@ export default {
       }
       this.$router.push(location);
     },
+    async logout() {
+      try {
+        await this.$store.dispatch("logout")
+        this.$router.push('/home')
+      } catch (e) {
+        alert(e.message);
+      }
+    }
   },
-  mounted() {
-    this.$bus.$on("clearKeyword", () => {
-      this.keyword = "";
-    });
-  },
+  computed: {
+    userName() {
+      return this.$store.state.User.userInfo.name;
+    }
+  }
 };
 </script>
 
 <style scoped lang="less">
 .header {
-  & > .top {
+  &>.top {
     background-color: #eaeaea;
     height: 30px;
     line-height: 30px;
@@ -114,7 +122,7 @@ export default {
         a {
           padding: 0 10px;
 
-          & + a {
+          &+a {
             border-left: 1px solid #b3aeae;
             margin: 0 0.08rem;
           }
@@ -123,7 +131,7 @@ export default {
     }
   }
 
-  & > .bottom {
+  &>.bottom {
     width: 1200px;
     margin: 0 auto;
     overflow: hidden;

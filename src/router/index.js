@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -65,9 +66,26 @@ const routes = [
     path: '/detail/:id?',
     component: () => import('@/views/Detail'),
     meta: {
-      isFooterShow: false
+      isFooterShow: true
     }
   },
+  {
+    name: 'addcart',
+    path: '/addcart',
+    component: () => import('@/views/AddCartSuccess'),
+    meta: {
+      isFooterShow: true
+    }
+  },
+  {
+    name: 'shopcart',
+    path: '/shopcart',
+    component: () => import('@/views/ShopCart'),
+    meta: {
+      isFooterShow: true
+    }
+  },
+
 ]
 
 const router = new VueRouter({
@@ -79,4 +97,28 @@ const router = new VueRouter({
   }
 })
 
+router.beforeEach(async (to, from, next) => {
+  let token = localStorage.getItem('token');
+  let name = store.state.User.userInfo.name;
+  if (token) {
+    if (to.path == '/login') {
+      next('/home');
+    } else {
+      // 有用户信息放行，没有则获取用户信息，若获取不到，证明token过期，需重新登录
+      if (name) {
+        next();
+      } else {
+        try {
+          await store.dispatch('getUserInfo')
+          next()
+        } catch (err) {
+          await store.dispatch('logout');
+          next('/login')
+        }
+      }
+    }
+  } else {
+    next();
+  }
+})
 export default router

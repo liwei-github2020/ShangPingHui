@@ -2,9 +2,9 @@
 
 import { getcategory, reqGetBannerList, reqGetFloorList } from '@/api'
 
-const state = () => {
-  categoryList: [];
-  bannerList: [];
+const state = {
+  categoryList: [],
+  bannerList: [],
   floorList: []
 }
 const mutations = {
